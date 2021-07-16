@@ -7,5 +7,6 @@
 [lints]
 
 [options]
+react.runtime=automatic
 
 [strict]
