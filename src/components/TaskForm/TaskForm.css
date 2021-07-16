@@ -5,7 +5,7 @@
 }
 
 .form-input {
-  width: 400px;
+  width: 350px;
   margin-right: 20px;
   padding: 10px;
   border-radius: 15px;
@@ -14,9 +14,6 @@
 
 .button {
   padding: 10px;
-  height: 40px;
-  width: 40px;
-  border-radius: 100%;
   background-color: #3333ff;
 
   /* Text */
