@@ -26,7 +26,7 @@ export const Task = ({
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const isFocused = editButtonText === "Confirm";
+  const isFocused = document.activeElement === inputRef.current;
 
   const handleEditTask = (event) => {
     event.preventDefault();
