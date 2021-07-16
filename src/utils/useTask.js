@@ -7,11 +7,14 @@ export type TaskType = {
   done: boolean,
 };
 
+type IDPayload = $PropertyType<TaskType, "id">; 
+type EditPayload = $Diff<TaskType, { done: boolean }>;
+
 type Action =
   | { type: "ADD_TASK", payload: TaskType }
-  | { type: "DELETE_TASK", payload: number }
-  | { type: "EDIT_TASK", payload: { id: number, text: string } }
-  | { type: "TOGGLE_TASK", payload: number }
+  | { type: "DELETE_TASK", payload: IDPayload }
+  | { type: "EDIT_TASK", payload: EditPayload}
+  | { type: "TOGGLE_TASK", payload: IDPayload }
   | { type: "GET_TASKS" };
 
 const taskReducer = (state: TaskType[], action: Action): TaskType[] => {
