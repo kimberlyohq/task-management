@@ -7,14 +7,14 @@ export type TaskType = {
   done: boolean,
 };
 
-type IDPayload = $PropertyType<TaskType, "id">; 
+type IDPayload = $PropertyType<TaskType, "id">;
 type EditPayload = $Diff<TaskType, { done: boolean }>;
 
 type Action =
   | { type: "ADD_TASK", payload: TaskType }
   | { type: "DELETE_TASK", payload: IDPayload }
-  | { type: "EDIT_TASK", payload: EditPayload}
-  | { type: "TOGGLE_TASK", payload: IDPayload }
+  | { type: "EDIT_TASK", payload: EditPayload }
+  | { type: "TOGGLE_TASK", payload: IDPayload };
 
 const taskReducer = (state: TaskType[], action: Action): TaskType[] => {
   switch (action.type) {
@@ -51,13 +51,15 @@ const taskReducer = (state: TaskType[], action: Action): TaskType[] => {
   }
 };
 
-export const useTask = (): ({
+type useTaskReturnType = {
+  tasks: Array<TaskType>,
   addTask: (text: string) => void,
   deleteTask: (id: number) => void,
   editTask: (id: number, text: string) => void,
-  tasks: Array<TaskType>,
   toggleTask: (id: number) => void,
-}) => {
+};
+
+export const useTask = (): useTaskReturnType => {
   const [state, dispatch] = useReducer(taskReducer, []);
 
   const addTask = (text) => {
