@@ -1,6 +1,6 @@
 // @flow
 
-import * as React from "react";
+import React from "react";
 import { useState, useRef } from "react";
 import "./Task.css";
 import type { TaskType } from "../../utils/useTask.js";
@@ -17,7 +17,7 @@ export const Task = ({
   onToggle,
   onDelete,
   onEdit,
-}: TaskProps): React.Element<"div"> => {
+}: TaskProps): React$Element<"div"> => {
   const { id, text, done } = task;
 
   const [isEditing, setIsEditing] = useState(false);

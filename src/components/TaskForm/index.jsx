@@ -1,6 +1,6 @@
 // @flow
 
-import * as React from "react";
+import React from "react";
 import { useState } from "react";
 import "./TaskForm.css";
 
@@ -8,7 +8,9 @@ type TaskFormProps = {
   onSubmit: (task: string) => void,
 };
 
-export const TaskForm = ({ onSubmit }: TaskFormProps): React.Element<"form"> => {
+export const TaskForm = ({
+  onSubmit,
+}: TaskFormProps): React$Element<"form"> => {
   const [inputValue, setInputValue] = useState("");
 
   const handleSubmit = (event) => {
@@ -35,7 +37,9 @@ export const TaskForm = ({ onSubmit }: TaskFormProps): React.Element<"form"> => 
         onChange={(event) => setInputValue(event.target.value)}
         className="form-input"
       />
-      <button type="submit" className="button">Add Task</button>
+      <button type="submit" className="button">
+        Add Task
+      </button>
     </form>
   );
 };
