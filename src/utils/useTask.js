@@ -15,7 +15,6 @@ type Action =
   | { type: "DELETE_TASK", payload: IDPayload }
   | { type: "EDIT_TASK", payload: EditPayload}
   | { type: "TOGGLE_TASK", payload: IDPayload }
-  | { type: "GET_TASKS" };
 
 const taskReducer = (state: TaskType[], action: Action): TaskType[] => {
   switch (action.type) {
@@ -46,9 +45,6 @@ const taskReducer = (state: TaskType[], action: Action): TaskType[] => {
       });
 
       return updatedTasks;
-    }
-    case "GET_TASKS": {
-      return state.slice();
     }
     default:
       return state;
@@ -82,16 +78,11 @@ export const useTask = (): ({
     dispatch({ type: "TOGGLE_TASK", payload: id });
   };
 
-  const getTasks = () => {
-    dispatch({ type: "GET_TASKS" });
-  };
-
   return {
     tasks: state,
     addTask,
     deleteTask,
     editTask,
     toggleTask,
-    getTasks,
   };
 };
