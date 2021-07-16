@@ -8,11 +8,15 @@
   width: 300px;
   margin-right: 20px;
   padding: 10px;
-
-  border-radius: 5px;
+  border-radius: 15px;
+  outline: none;
 }
 
 .button {
   padding: 10px;
-  border-radius: 5px;
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+  background-color: #3333ff;
+  color: #fff;
 }

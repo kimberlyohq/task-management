@@ -34,7 +34,7 @@ export const TaskForm = ({ addTask }: TaskFormProps): React.Element<"form"> => {
         onChange={(event) => setInputValue(event.target.value)}
         className="form-input"
       />
-      <button type="submit" className="button">Add Task</button>
+      <button type="submit" className="button">+</button>
     </form>
   );
 };
