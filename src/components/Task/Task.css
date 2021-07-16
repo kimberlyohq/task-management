@@ -1,0 +1,43 @@
+.task-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom: 1px solid;
+  border-color: black;
+
+  margin-bottom: 5px;
+}
+
+.left-items {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.checkbox-container {
+  margin-right: 8px;
+}
+
+.checkbox {
+  height: 15px;
+  width: 15px;
+}
+
+.task-input {
+  padding: 10px;
+  outline: none;
+  border: 0;
+}
+
+.buttons {
+  flex-direction: row;
+  align-items: center;
+}
+
+.edit-button {
+  margin-right: 10px;
+}
