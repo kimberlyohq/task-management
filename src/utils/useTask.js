@@ -66,16 +66,16 @@ export const useTask = (): ({
     dispatch({ type: "ADD_TASK", payload: newTask });
   };
 
-  const deleteTask = (id) => {
+  const deleteTask = (id: number) => {
     dispatch({ type: "DELETE_TASK", payload: id });
   };
 
-  const editTask = (id, text) => {
+  const editTask = (id: number, text: string) => {
     const payload = { id, text };
     dispatch({ type: "EDIT_TASK", payload });
   };
 
-  const toggleTask = (id) => {
+  const toggleTask = (id: number) => {
     dispatch({ type: "TOGGLE_TASK", payload: id });
   };
 
