@@ -47,9 +47,10 @@ const taskReducer = (state: TaskType[], action: Action): TaskType[] => {
 
       return updatedTasks;
     }
-    case "GET_TASKS": {
-      return state.slice();
-    }
+    //all reducers action just need update the state,
+    // case "GET_TASKS": {
+    //   return state.slice();
+    // }
     default:
       return state;
   }
@@ -82,9 +83,7 @@ export const useTask = (): ({
     dispatch({ type: "TOGGLE_TASK", payload: id });
   };
 
-  const getTasks = () => {
-    dispatch({ type: "GET_TASKS" });
-  };
+
 
   return {
     tasks: state,
@@ -92,6 +91,5 @@ export const useTask = (): ({
     deleteTask,
     editTask,
     toggleTask,
-    getTasks,
   };
 };

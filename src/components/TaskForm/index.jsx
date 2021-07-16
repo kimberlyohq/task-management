@@ -13,13 +13,13 @@ export const TaskForm = ({ onSubmit }: TaskFormProps): React.Element<"form"> => 
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const task = inputValue.trim()
     // validate input
-    if (inputValue === "") {
+    if (!task) {
       alert("Cannot add an empty task!");
       return;
     }
 
-    const task = inputValue.trim();
     onSubmit(task);
     // reset the input bar
     setInputValue("");

@@ -19,39 +19,16 @@ export const Task = ({
   onEdit,
 }: TaskProps): React.Element<"div"> => {
   const { id, text, done } = task;
-
-  const [taskText, setTaskText] = useState(text);
-  const [editButtonText, setEditButtonText] = useState("Edit");
+  //a better way is using a edited state, make less state in a component and logic simpler.
+  const [edited, setEdited] = useState(false)
+ 
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const isFocused = document.activeElement === inputRef.current;
+  
 
   const handleEditTask = (event) => {
-    event.preventDefault();
-    if (!isFocused && inputRef.current instanceof HTMLInputElement) {
-      inputRef.current.focus();
-      setEditButtonText("Confirm");
-      return;
-    }
-
-    if (inputRef.current instanceof HTMLInputElement) {
-      inputRef.current.blur();
-      setEditButtonText("Edit");
-    }
-
-    // validate
-    if (taskText === "") {
-      alert("Task cannot be empty!");
-      // reset to original task
-      setTaskText(text);
-      return;
-    }
-
-    // no change
-    if (taskText.trim() === text) {
-      return;
-    }
+    //todos
 
     onEdit(id, taskText.trim());
   };
@@ -67,16 +44,17 @@ export const Task = ({
             className="checkbox"
           />
         </div>
-        <input
+        {edited ? <input
+          autoFocus
           ref={inputRef}
-          value={taskText}
-          onChange={(event) => setTaskText(event.target.value)}
+          defaultValue={taskText}
           className={"task-input" + (done ? "-done" : "")}
-        />
+        /> : <span>{taskText}</span>}
+       
       </div>
       <div className="buttons">
         <button type="submit" onClick={handleEditTask} className="edit-button">
-          {editButtonText}
+          {edited ? 'Confrim' : 'Edit'}
         </button>
         {!isFocused && (
           <button onClick={() => onDelete(id)} className="delete-button">
