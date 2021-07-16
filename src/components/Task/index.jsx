@@ -49,11 +49,11 @@ export const Task = ({
     }
 
     // no change
-    if (taskText === text) {
+    if (taskText.trim() === text) {
       return;
     }
 
-    onEdit(id, taskText);
+    onEdit(id, taskText.trim());
   };
 
   return (
