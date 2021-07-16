@@ -6,6 +6,7 @@ import { Task } from "./components/Task";
 import { TaskForm } from "./components/TaskForm";
 import { useTask } from "./utils/useTask";
 
+
 function App(): React.Element<"div"> {
   const { tasks, addTask, deleteTask, editTask, toggleTask } = useTask();
 
@@ -15,9 +16,7 @@ function App(): React.Element<"div"> {
       {tasks.map((task) => (
         <Task
           key={task.id}
-          id={task.id}
-          text={task.text}
-          done={task.done}
+          task={task}
           onToggle={toggleTask}
           onDelete={deleteTask}
           onEdit={editTask}

@@ -3,25 +3,24 @@
 import * as React from "react";
 import { useState, useRef } from "react";
 import "./Task.css";
+import type { TaskType } from "../../utils/useTask.js";
 
 type TaskProps = {
-  id: number,
-  text: string,
-  done: boolean,
+  task: TaskType,
   onToggle: (id: number) => void,
   onDelete: (id: number) => void,
   onEdit: (id: number, text: string) => void,
 };
 
 export const Task = ({
-  id,
-  text,
-  done,
+  task,
   onToggle,
   onDelete,
   onEdit,
 }: TaskProps): React.Element<"div"> => {
-  const [task, setTask] = useState(text);
+  const {id, text, done} = task;
+
+  const [taskText, setTaskText] = useState(text);
   const [editButtonText, setEditButtonText] = useState("Edit");
 
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -42,19 +41,19 @@ export const Task = ({
     }
 
     // validate
-    if (task === "") {
+    if (taskText === "") {
       alert("Task cannot be empty!");
       // reset to original task
-      setTask(text);
+      setTaskText(text);
       return;
     }
 
     // no change
-    if (task === text) {
+    if (taskText === text) {
       return;
     }
 
-    onEdit(id, task);
+    onEdit(id, taskText);
   };
 
   return (
@@ -70,8 +69,8 @@ export const Task = ({
         </div>
         <input
           ref={inputRef}
-          value={task}
-          onChange={(event) => setTask(event.target.value)}
+          value={taskText}
+          onChange={(event) => setTaskText(event.target.value)}
           className="task-input"
         />
       </div>
