@@ -62,7 +62,7 @@ type useTaskReturnType = {
 export const useTask = (): useTaskReturnType => {
   const [state, dispatch] = useReducer(taskReducer, []);
 
-  const addTask = (text) => {
+  const addTask = (text: string) => {
     const newTask = { id: Math.random(), text, done: false };
     dispatch({ type: "ADD_TASK", payload: newTask });
   };
