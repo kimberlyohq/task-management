@@ -18,7 +18,7 @@ export const Task = ({
   onDelete,
   onEdit,
 }: TaskProps): React.Element<"div"> => {
-  const {id, text, done} = task;
+  const { id, text, done } = task;
 
   const [taskText, setTaskText] = useState(text);
   const [editButtonText, setEditButtonText] = useState("Edit");
@@ -78,7 +78,11 @@ export const Task = ({
         <button type="submit" onClick={handleEditTask} className="edit-button">
           {editButtonText}
         </button>
-        {!isFocused && <button onClick={() => onDelete(id)}>Delete</button>}
+        {!isFocused && (
+          <button onClick={() => onDelete(id)} className="delete-button">
+            Delete
+          </button>
+        )}
       </div>
     </div>
   );
