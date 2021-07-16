@@ -6,10 +6,11 @@
   align-items: center;
   justify-content: space-between;
 
-  border-bottom: 1px solid;
+  border-bottom: 0.5px solid;
   border-color: black;
 
   margin-bottom: 5px;
+  padding: 10px;
 }
 
 .left-items {
