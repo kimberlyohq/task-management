@@ -13,7 +13,7 @@
   padding: 10px;
 }
 
-.left-items {
+.left-container {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -32,6 +32,13 @@
   padding: 10px;
   outline: none;
   border: 0;
+}
+
+.task-input-done {
+  padding: 10px;
+  outline: none;
+  border: 0;
+  text-decoration: line-through;
 }
 
 .buttons {

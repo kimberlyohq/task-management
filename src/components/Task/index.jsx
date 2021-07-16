@@ -58,7 +58,7 @@ export const Task = ({
 
   return (
     <div className="task-container">
-      <div className="left-items">
+      <div className="left-container">
         <div className="checkbox-container">
           <input
             type="checkbox"
@@ -71,7 +71,7 @@ export const Task = ({
           ref={inputRef}
           value={taskText}
           onChange={(event) => setTaskText(event.target.value)}
-          className="task-input"
+          className={"task-input" + (done ? "-done" : "")}
         />
       </div>
       <div className="buttons">

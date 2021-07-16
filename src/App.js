@@ -8,11 +8,18 @@ import { useTask } from "./utils/useTask";
 
 
 function App(): React.Element<"div"> {
+
   const { tasks, addTask, deleteTask, editTask, toggleTask } = useTask();
+
+  const countActiveTasks = () => {
+    return tasks.filter((task) => !task.done).length;
+  }
 
   return (
     <div className="App">
-      <TaskForm addTask={addTask} />
+      <h1>Tasks ✅</h1>
+      <h4>{countActiveTasks()} active tasks</h4>
+      <TaskForm onSubmit={addTask} />
       {tasks.map((task) => (
         <Task
           key={task.id}
