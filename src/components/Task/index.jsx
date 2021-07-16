@@ -20,40 +20,30 @@ export const Task = ({
 }: TaskProps): React.Element<"div"> => {
   const { id, text, done } = task;
 
-  const [taskText, setTaskText] = useState(text);
-  const [editButtonText, setEditButtonText] = useState("Edit");
+  const [isEditing, setIsEditing] = useState(false);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const isFocused = document.activeElement === inputRef.current;
-
   const handleEditTask = (event) => {
     event.preventDefault();
-    if (!isFocused && inputRef.current instanceof HTMLInputElement) {
-      inputRef.current.focus();
-      setEditButtonText("Confirm");
+    if (!isEditing) {
+      setIsEditing(true);
       return;
     }
 
+    let editedTask: ?string;
     if (inputRef.current instanceof HTMLInputElement) {
-      inputRef.current.blur();
-      setEditButtonText("Edit");
+      editedTask = inputRef.current.value.trim();
     }
 
-    // validate
-    if (taskText === "") {
-      alert("Task cannot be empty!");
-      // reset to original task
-      setTaskText(text);
+    if (!editedTask) {
+      alert("Cannot edit empty task");
+      setIsEditing(false);
       return;
     }
 
-    // no change
-    if (taskText.trim() === text) {
-      return;
-    }
-
-    onEdit(id, taskText.trim());
+    setIsEditing(false);
+    onEdit(id, editedTask);
   };
 
   return (
@@ -67,18 +57,22 @@ export const Task = ({
             className="checkbox"
           />
         </div>
-        <input
-          ref={inputRef}
-          value={taskText}
-          onChange={(event) => setTaskText(event.target.value)}
-          className={"task-input" + (done ? "-done" : "")}
-        />
+        {isEditing ? (
+          <input
+            autoFocus
+            ref={inputRef}
+            defaultValue={text}
+            className="task-input"
+          />
+        ) : (
+          <span className={done ? "done" : ""}>{text}</span>
+        )}
       </div>
       <div className="buttons">
         <button type="submit" onClick={handleEditTask} className="edit-button">
-          {editButtonText}
+          {isEditing ? "Confirm" : "Edit"}
         </button>
-        {!isFocused && (
+        {!isEditing && (
           <button onClick={() => onDelete(id)} className="delete-button">
             Delete
           </button>

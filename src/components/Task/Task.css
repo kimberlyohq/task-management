@@ -29,15 +29,12 @@
 }
 
 .task-input {
-  padding: 10px;
   outline: none;
   border: 0;
+  font-size: 16px;
 }
 
-.task-input-done {
-  padding: 10px;
-  outline: none;
-  border: 0;
+.done {
   text-decoration: line-through;
 }
 
