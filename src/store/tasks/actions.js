@@ -16,24 +16,24 @@ const TASKS_URL = "http://localhost:8000/tasks";
 
 // Action Creators
 
-export const addTask = (task: TaskPayload): AddTaskAction => {
+const addTask = (task: TaskPayload): AddTaskAction => {
   return { type: "tasks/addTask", payload: { task } };
 };
 
-export const deleteTask = (id: number): DeleteTaskAction => {
+const deleteTask = (id: number): DeleteTaskAction => {
   return { type: "tasks/deleteTask", payload: id };
 };
 
-export const editTask = (id: number, text: string): EditTaskAction => {
+const editTask = (id: number, text: string): EditTaskAction => {
   const payload = { id, text };
   return { type: "tasks/editTask", payload };
 };
 
-export const getTasks = (tasks: TaskPayload[]): GetTasksAction => {
+const getTasks = (tasks: TaskPayload[]): GetTasksAction => {
   return { type: "tasks/getTasks", payload: { tasks } };
 };
 
-export const toggleTask = (id: number, done: boolean): ToggleTaskAction => {
+const toggleTask = (id: number, done: boolean): ToggleTaskAction => {
   return { type: "tasks/toggleTask", payload: { id, done } };
 };
 

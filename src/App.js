@@ -32,14 +32,14 @@ function App(): React.Element<"div"> {
     <div className="App">
       <h1>Tasks ✅</h1>
       <h4>{activeTasks} active tasks</h4>
-      <TaskForm addTask={(text: string) => dispatch(addTaskAsync(text))} />
+      <TaskForm onSubmit={(text: string) => dispatch(addTaskAsync(text))} />
       {tasks.map((task) => (
         <Task
           key={task.id}
           task={task}
-          toggleTask={(id: number) => dispatch(toggleTaskAsync(id))}
-          deleteTask={(id: number) => dispatch(deleteTaskAsync(id))}
-          editTask={(id: number, text: string) =>
+          onToggle={(id: number) => dispatch(toggleTaskAsync(id))}
+          onDelete={(id: number) => dispatch(deleteTaskAsync(id))}
+          onEdit={(id: number, text: string) =>
             dispatch(editTaskAsync(id, text))
           }
         />
