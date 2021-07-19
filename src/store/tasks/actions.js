@@ -12,7 +12,7 @@ import type {
 
 import axios from "axios";
 
-const URL = "http://localhost:8000/tasks";
+const TASKS_URL = "http://localhost:8000/tasks";
 
 // Action Creators
 
@@ -39,16 +39,17 @@ export const toggleTask = (id: number, done: boolean): ToggleTaskAction => {
 
 export const fetchTasks = (): ThunkAction => {
   return (dispatch, getState) => {
-    axios.get(URL).then((response) => {
+    axios.get(TASKS_URL).then((response) => {
       dispatch(getTasks(response.data));
     });
   };
 };
 
+// Thunk Actions
+
 export const addTaskAsync = (text: string): ThunkAction => {
   return (dispatch, getState) => {
-    axios.post(`${URL}/addTask`, { text }).then((response) => {
-      console.log(response.data);
+    axios.post(`${TASKS_URL}/addTask`, { text }).then((response) => {
       dispatch(addTask(response.data));
     });
   };
@@ -56,33 +57,34 @@ export const addTaskAsync = (text: string): ThunkAction => {
 
 export const deleteTaskAsync = (id: number): ThunkAction => {
   return (dispatch, getState) => {
-    axios.post(`${URL}/deleteTask/${id}`).then((response) => {
-      console.log(response.status);
-      dispatch(deleteTask(id));
-    });
+    axios
+      .post(`${TASKS_URL}/deleteTask/${id}`)
+      .then((response) => {
+        dispatch(deleteTask(id));
+      })
+      .catch((error) => console.log(error.response.data.message));
   };
 };
 
 export const editTaskAsync = (id: number, text: string): ThunkAction => {
   return (dispatch, getState) => {
     axios
-      .post(`${URL}/editTask/${id}`, { text })
+      .post(`${TASKS_URL}/editTask/${id}`, { text })
       .then((response) => {
-        console.log(response.status);
         dispatch(editTask(id, text));
       })
-      .catch((error) => console.log(error.message));
+      .catch((error) => console.log(error.response.data.message));
   };
 };
 
 export const toggleTaskAsync = (id: number): ThunkAction => {
   return (dispatch, getState) => {
     axios
-      .post(`${URL}/toggleTask/${id}`, { id })
+      .post(`${TASKS_URL}/toggleTask/${id}`, { id })
       .then((response) => {
         const { done } = response.data;
         dispatch(toggleTask(id, done));
       })
-      .catch((error) => console.log("error"));
+      .catch((error) => console.log(error.response.data.message));
   };
 };

@@ -56,5 +56,9 @@ export const toggleTask = (req, res) => {
     return toggledTask;
   });
 
+  if (!toggledTask) {
+    res.status(404).send({ message: "Task not found" });
+  }
+
   res.status(200).send(toggledTask);
 };
