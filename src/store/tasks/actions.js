@@ -45,7 +45,7 @@ export const fetchTasks = (): ThunkAction => {
   };
 };
 
-export const saveTask = (text: string): ThunkAction => {
+export const addTaskAsync = (text: string): ThunkAction => {
   return (dispatch, getState) => {
     axios.post(`${URL}/addTask`, { text }).then((response) => {
       console.log(response.data);

@@ -5,12 +5,10 @@ import { useState } from "react";
 import "./TaskForm.css";
 
 type TaskFormProps = {
-  onSubmit: (task: string) => void,
+  addTask: (task: string) => void,
 };
 
-export const TaskForm = ({
-  onSubmit,
-}: TaskFormProps): React$Element<"form"> => {
+export const TaskForm = ({ addTask }: TaskFormProps): React$Element<"form"> => {
   const [inputValue, setInputValue] = useState("");
 
   const handleSubmit = (event) => {
@@ -23,7 +21,8 @@ export const TaskForm = ({
       return;
     }
 
-    onSubmit(task);
+    // onSubmit(task);
+    addTask(inputValue);
     // reset the input bar
     setInputValue("");
   };
