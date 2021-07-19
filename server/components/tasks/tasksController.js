@@ -1,4 +1,4 @@
-let DATA = [{ id: 1, text: "Task 1", done: false }];
+let DATA = [{ id: "1", text: "Task 1", done: false }];
 
 export const getTasks = (req, res) => {
   res.status(200).send(DATA);
@@ -12,9 +12,9 @@ export const addTask = (req, res) => {
 };
 
 export const deleteTask = (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
 
-  DATA = DATA.filter((task) => task.id !== id);
+  DATA = DATA.filter((task) => task.id !== Number(id));
 
   res.status(200).send();
 };
@@ -23,11 +23,11 @@ export const editTask = (req, res) => {
   const { id, text } = req.body;
 
   DATA = DATA.map((task) => {
-    if (task.id !== id) {
+    if (task.id !== Number(id)) {
       return task;
     }
 
-    const editedTask = { ...task, text: text };
+    const editedTask = { ...task, text };
     return editedTask;
   });
 
@@ -35,15 +35,17 @@ export const editTask = (req, res) => {
 };
 
 export const toggleTask = (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
+
   let toggledTask;
 
   DATA = DATA.map((task) => {
-    if (task.id !== id) {
+    if (task.id !== Number(id)) {
       return task;
     }
 
     toggledTask = { ...task, done: !task.done };
+
     return toggledTask;
   });
 
