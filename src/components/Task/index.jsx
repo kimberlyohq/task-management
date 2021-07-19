@@ -42,6 +42,12 @@ export const Task = ({
       return;
     }
 
+    // no change to text
+    if (editedTask === text) {
+      setIsEditing(false);
+      return;
+    }
+
     setIsEditing(false);
     editTask(id, editedTask);
   };
