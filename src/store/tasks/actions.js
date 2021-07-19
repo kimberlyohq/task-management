@@ -34,7 +34,7 @@ export const getTasks = (tasks: TaskPayload[]): GetTasksAction => {
 };
 
 export const toggleTask = (id: number, done: boolean): ToggleTaskAction => {
-  return { type: "tasks/toggleTask", payload: {id, done} };
+  return { type: "tasks/toggleTask", payload: { id, done } };
 };
 
 export const fetchTasks = (): ThunkAction => {
@@ -56,7 +56,7 @@ export const addTaskAsync = (text: string): ThunkAction => {
 
 export const deleteTaskAsync = (id: number): ThunkAction => {
   return (dispatch, getState) => {
-    axios.post(`${URL}/deleteTask`, { id }).then((response) => {
+    axios.post(`${URL}/deleteTask/${id}`).then((response) => {
       console.log(response.status);
       dispatch(deleteTask(id));
     });
@@ -65,18 +65,24 @@ export const deleteTaskAsync = (id: number): ThunkAction => {
 
 export const editTaskAsync = (id: number, text: string): ThunkAction => {
   return (dispatch, getState) => {
-    axios.post(`${URL}/editTask`, { id, text}).then((response) => {
-      console.log(response.status);
-      dispatch(editTask(id, text));
-    });
+    axios
+      .post(`${URL}/editTask/${id}`, { text })
+      .then((response) => {
+        console.log(response.status);
+        dispatch(editTask(id, text));
+      })
+      .catch((error) => console.log(error.message));
   };
 };
 
 export const toggleTaskAsync = (id: number): ThunkAction => {
   return (dispatch, getState) => {
-    axios.post(`${URL}/toggleTask`, { id }).then((response) => {
-      const { done } = response.data;
-      dispatch(toggleTask(id, done));
-    });
+    axios
+      .post(`${URL}/toggleTask/${id}`, { id })
+      .then((response) => {
+        const { done } = response.data;
+        dispatch(toggleTask(id, done));
+      })
+      .catch((error) => console.log("error"));
   };
 };

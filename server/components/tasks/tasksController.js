@@ -1,4 +1,4 @@
-let DATA = [{ id: "1", text: "Task 1", done: false }];
+let DATA = [{ id: 1, text: "Task 1", done: false }];
 
 export const getTasks = (req, res) => {
   res.status(200).send(DATA);
@@ -20,16 +20,23 @@ export const deleteTask = (req, res) => {
 };
 
 export const editTask = (req, res) => {
-  const { id, text } = req.body;
+  const { id } = req.params;
+  const { text } = req.body;
+
+  let editedTask;
 
   DATA = DATA.map((task) => {
     if (task.id !== Number(id)) {
       return task;
     }
 
-    const editedTask = { ...task, text };
+    editedTask = { ...task, text };
     return editedTask;
   });
+
+  if (!editedTask) {
+    res.status(404).send({ message: "Task not found" });
+  }
 
   res.status(200).send();
 };

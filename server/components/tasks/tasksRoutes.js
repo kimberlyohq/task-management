@@ -13,7 +13,7 @@ router.get("/", getTasks);
 
 router.post("/addTask", addTask);
 router.post("/deleteTask/:id", deleteTask);
-router.post("/editTask", editTask);
+router.post("/editTask/:id", editTask);
 router.post("/toggleTask/:id", toggleTask);
 
 export default router;
