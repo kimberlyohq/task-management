@@ -39,9 +39,12 @@ const toggleTask = (id: number, done: boolean): ToggleTaskAction => {
 
 export const fetchTasks = (): ThunkAction => {
   return (dispatch, getState) => {
-    axios.get(TASKS_URL).then((response) => {
-      dispatch(getTasks(response.data));
-    });
+    axios
+      .get(TASKS_URL)
+      .then((response) => {
+        dispatch(getTasks(response.data));
+      })
+      .catch((error) => console.log(error.response.data.message));
   };
 };
 
