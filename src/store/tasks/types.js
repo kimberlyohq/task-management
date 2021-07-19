@@ -15,14 +15,14 @@ export type EditTaskAction = { type: "tasks/editTask", payload: EditTaskPayload 
 export type GetTasksAction = { type: "tasks/getTasks" };
 export type ToggleTaskAction = { type: "tasks/toggleTask", payload: TaskIdPayload };
 
-type Action =
+export type Action =
   | AddTaskAction
   | DeleteTaskAction
   | EditTaskAction
   | GetTasksAction
   | ToggleTaskAction;
 
-type State = {
+export type State = {
   // make redux state immutable 
   +tasks: Array<TaskPayload>,
 };
