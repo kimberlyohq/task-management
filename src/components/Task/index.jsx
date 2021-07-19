@@ -7,16 +7,16 @@ import type { TaskType } from "../../utils/useTask.js";
 
 type TaskProps = {
   task: TaskType,
-  onToggle: (id: number) => void,
-  onDelete: (id: number) => void,
-  onEdit: (id: number, text: string) => void,
+  deleteTask: (id: number) => void,
+  editTask: (id: number, text: string) => void,
+  toggleTask: (id: number) => void,
 };
 
 export const Task = ({
   task,
-  onToggle,
-  onDelete,
-  onEdit,
+  deleteTask,
+  editTask,
+  toggleTask,
 }: TaskProps): React$Element<"div"> => {
   const { id, text, done } = task;
 
@@ -43,7 +43,7 @@ export const Task = ({
     }
 
     setIsEditing(false);
-    onEdit(id, editedTask);
+    editTask(id, editedTask);
   };
 
   return (
@@ -53,7 +53,7 @@ export const Task = ({
           <input
             type="checkbox"
             checked={done}
-            onChange={() => onToggle(id)}
+            onChange={() => toggleTask(id)}
             className="checkbox"
           />
         </div>
@@ -73,7 +73,7 @@ export const Task = ({
           {isEditing ? "Confirm" : "Edit"}
         </button>
         {!isEditing && (
-          <button onClick={() => onDelete(id)} className="delete-button">
+          <button onClick={() => deleteTask(id)} className="delete-button">
             Delete
           </button>
         )}

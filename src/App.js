@@ -22,9 +22,9 @@ function App(): React.Element<"div"> {
         <Task
           key={task.id}
           task={task}
-          onToggle={toggleTask}
-          onDelete={deleteTask}
-          onEdit={editTask}
+          toggleTask={toggleTask}
+          deleteTask={deleteTask}
+          editTask={editTask}
         />
       ))}
     </div>
