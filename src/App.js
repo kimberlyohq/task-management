@@ -8,10 +8,10 @@ import { TaskForm } from "./components/TaskForm";
 import { useSelector, useDispatch } from "react-redux";
 import {
   fetchTasks,
-  addTaskAsync,
-  deleteTaskAsync,
-  editTaskAsync,
-  toggleTaskAsync,
+  addTask,
+  deleteTask,
+  editTask,
+  toggleTask,
 } from "./store/tasks/actions";
 
 function App(): React.Element<"div"> {
@@ -32,16 +32,14 @@ function App(): React.Element<"div"> {
     <div className="App">
       <h1>Tasks ✅</h1>
       <h4>{activeTasks} active tasks</h4>
-      <TaskForm onSubmit={(text: string) => dispatch(addTaskAsync(text))} />
+      <TaskForm onSubmit={(text: string) => dispatch(addTask(text))} />
       {tasks.map((task) => (
         <Task
           key={task.id}
           task={task}
-          onToggle={(id: number) => dispatch(toggleTaskAsync(id))}
-          onDelete={(id: number) => dispatch(deleteTaskAsync(id))}
-          onEdit={(id: number, text: string) =>
-            dispatch(editTaskAsync(id, text))
-          }
+          onToggle={(id: number) => dispatch(toggleTask(id))}
+          onDelete={(id: number) => dispatch(deleteTask(id))}
+          onEdit={(id: number, text: string) => dispatch(editTask(id, text))}
         />
       ))}
     </div>
