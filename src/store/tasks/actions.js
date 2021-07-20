@@ -4,7 +4,6 @@ import type {
   AddTaskAction,
   DeleteTaskAction,
   EditTaskAction,
-  GetTasksAction,
   ToggleTaskAction,
   TaskPayload,
   ThunkAction,
@@ -29,10 +28,6 @@ const editTask = (id: number, text: string): EditTaskAction => {
   return { type: "tasks/editTask", payload };
 };
 
-const getTasks = (tasks: TaskPayload[]): GetTasksAction => {
-  return { type: "tasks/getTasks", payload: { tasks } };
-};
-
 const toggleTask = (id: number, done: boolean): ToggleTaskAction => {
   return { type: "tasks/toggleTask", payload: { id, done } };
 };
@@ -40,13 +35,24 @@ const toggleTask = (id: number, done: boolean): ToggleTaskAction => {
 // Thunk Actions
 
 export const fetchTasks = (): ThunkAction => {
-  return (dispatch, getState) => {
-    axios
-      .get(TASKS_URL)
-      .then((response) => {
-        dispatch(getTasks(response.data));
-      })
-      .catch((error) => console.log(error.response.data.message));
+  return async (dispatch, getState) => {
+    dispatch({
+      type: "tasks/fetchTasksRequest",
+      payload: { status: "loading" },
+    });
+    try {
+      const response = await axios.get(TASKS_URL);
+
+      dispatch({
+        type: "tasks/fetchTasksSuccess",
+        payload: { tasks: response.data, status: "succeeded" },
+      });
+    } catch (err) {
+      dispatch({
+        type: "tasks/fetchTasksError",
+        payload: { status: "error", error: "Error fetching data" },
+      });
+    }
   };
 };
 

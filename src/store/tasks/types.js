@@ -22,21 +22,36 @@ export type EditTaskAction = {
   type: "tasks/editTask",
   payload: EditTaskPayload,
 };
-export type GetTasksAction = {
-  type: "tasks/getTasks",
-  payload: { tasks: TaskPayload[] },
-};
 export type ToggleTaskAction = {
   type: "tasks/toggleTask",
   payload: ToggleTaskPayload,
 };
 
+// Fetch Tasks
+export type FetchTasksRequest = {
+  type: "tasks/fetchTasksRequest",
+  payload: { status: "loading" },
+};
+
+export type FetchTasksSuccess = {
+  type: "tasks/fetchTasksSuccess",
+  payload: { tasks: TaskPayload[], status: "succeeded" },
+};
+
+export type FetchTasksError = {
+  type: "tasks/fetchTasksError",
+  payload: { status: "error", error: string },
+};
+
+// Add Task
 export type Action =
   | AddTaskAction
   | DeleteTaskAction
   | EditTaskAction
-  | GetTasksAction
-  | ToggleTaskAction;
+  | ToggleTaskAction
+  | FetchTasksRequest
+  | FetchTasksSuccess
+  | FetchTasksError;
 export type State = {
   // make redux state immutable
   +tasks: Array<TaskPayload>,
