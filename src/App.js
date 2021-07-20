@@ -12,15 +12,25 @@ import {
   deleteTask,
   editTask,
   toggleTask,
+  resetStatus,
 } from "./store/tasks/actions";
 
 function App(): React.Element<"div"> {
   const dispatch = useDispatch();
+  const errorMsg = useSelector((state) => state.error);
 
   // Fetch tasks from server when the app first mounts
   useEffect(() => {
     dispatch(fetchTasks());
   }, []);
+
+  useEffect(() => {
+    if (!errorMsg) {
+      return;
+    }
+    alert(errorMsg);
+    dispatch(resetStatus());
+  }, [errorMsg]);
 
   const tasks = useSelector((state) => state.tasks);
 

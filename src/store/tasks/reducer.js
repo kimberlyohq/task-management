@@ -10,6 +10,9 @@ const initialState: State = {
 
 export const reducer = (state: State = initialState, action: Action): State => {
   switch (action.type) {
+    case "tasks/resetStatus": {
+      return { ...state, status: "idle", error: null };
+    }
     case "tasks/loadRequest": {
       const { status } = action.payload;
       return { ...state, status };

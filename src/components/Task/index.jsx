@@ -54,7 +54,7 @@ export const Task = ({
 
   const handleToggle = () => {
     onToggle(id);
-  }
+  };
 
   const handleDelete = () => {
     onDelete(id);

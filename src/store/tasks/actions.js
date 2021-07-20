@@ -3,6 +3,7 @@
 import type {
   LoadRequestAction,
   LoadRequestErrorAction,
+  ResetStatusAction,
   ThunkAction,
 } from "./types";
 
@@ -18,6 +19,10 @@ const loadRequest = (): LoadRequestAction => ({
 const loadRequestError = (error: string): LoadRequestErrorAction => ({
   type: "tasks/loadRequestError",
   payload: { status: "error", error },
+});
+
+export const resetStatus = (): ResetStatusAction => ({
+  type: "tasks/resetStatus",
 });
 
 // Thunk Actions
