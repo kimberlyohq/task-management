@@ -32,17 +32,17 @@ export const reducer = (state: State = initialState, action: Action): State => {
       return { ...state, status, tasks: updatedTasks };
     }
     case "tasks/toggleTaskSuccess": {
-      const { task: toggledTask } = action.payload;
+      const { task: toggledTask, status } = action.payload;
       const updatedTasks = state.tasks.map((task) => {
         if (task.id !== toggledTask.id) {
           return task;
         }
         return toggledTask;
       });
-      return { ...state, tasks: updatedTasks };
+      return { ...state, status, tasks: updatedTasks };
     }
     case "tasks/editTaskSuccess":
-      const { task: editedTask } = action.payload;
+      const { task: editedTask, status } = action.payload;
 
       const updatedTasks = state.tasks.map((task) => {
         if (task.id !== editedTask.id) {
@@ -51,7 +51,7 @@ export const reducer = (state: State = initialState, action: Action): State => {
         return editedTask;
       });
 
-      return { ...state, tasks: updatedTasks };
+      return { ...state, status, tasks: updatedTasks };
     default:
       return state;
   }
