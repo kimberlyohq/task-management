@@ -12,12 +12,14 @@ export const reducer = (state: State = initialState, action: Action): State => {
   switch (action.type) {
     case "tasks/addTaskRequest":
     case "tasks/deleteTaskRequest":
+    case "tasks/editTaskRequest":
     case "tasks/fetchTasksRequest": {
       const { status } = action.payload;
       return { ...state, status };
     }
     case "tasks/addTaskError":
     case "tasks/deleteTaskError":
+    case "tasks/editTaskError":
     case "tasks/fetchTasksError": {
       const { status, error } = action.payload;
       return { ...state, status, error };
@@ -46,15 +48,16 @@ export const reducer = (state: State = initialState, action: Action): State => {
       });
       return { ...state, tasks: updatedTasks };
     }
-    case "tasks/editTask":
-      const { id, text } = action.payload;
+    case "tasks/editTaskSuccess":
+      const { task: editedTask } = action.payload;
+
       const updatedTasks = state.tasks.map((task) => {
-        if (task.id !== id) {
+        if (task.id !== editedTask.id) {
           return task;
         }
-        const editedTask = { ...task, text };
         return editedTask;
       });
+
       return { ...state, tasks: updatedTasks };
     default:
       return state;

@@ -1,6 +1,6 @@
 // @flow
 
-import type { EditTaskAction, ToggleTaskAction, ThunkAction } from "./types";
+import type {  ToggleTaskAction, ThunkAction } from "./types";
 
 import axios from "axios";
 
@@ -8,10 +8,6 @@ const TASKS_URL = "http://localhost:8000/tasks";
 
 // Action Creators
 
-const editTask = (id: number, text: string): EditTaskAction => {
-  const payload = { id, text };
-  return { type: "tasks/editTask", payload };
-};
 
 const toggleTask = (id: number, done: boolean): ToggleTaskAction => {
   return { type: "tasks/toggleTask", payload: { id, done } };
@@ -85,14 +81,29 @@ export const deleteTask = (id: number): ThunkAction => {
   };
 };
 
-export const editTaskAsync = (id: number, text: string): ThunkAction => {
-  return (dispatch, getState) => {
-    axios
-      .post(`${TASKS_URL}/editTask/${id}`, { text })
-      .then((response) => {
-        dispatch(editTask(id, text));
-      })
-      .catch((error) => console.log(error.response.data.message));
+export const editTask = (id: number, text: string): ThunkAction => {
+  return async (dispatch, getState) => {
+    dispatch({
+      type: "tasks/editTaskRequest",
+      payload: { status: "loading" },
+    });
+    try {
+      const response = await axios.post(`${TASKS_URL}/editTask/${id}`, {
+        text,
+      });
+
+      console.log(response.data);
+
+      dispatch({
+        type: "tasks/editTaskSuccess",
+        payload: { task: response.data, status: "succeeded" },
+      });
+    } catch (err) {
+      dispatch({
+        type: "tasks/editTaskError",
+        payload: { status: "error", error: "Error editing task" },
+      });
+    }
   };
 };
 
