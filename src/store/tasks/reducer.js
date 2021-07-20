@@ -23,16 +23,16 @@ export const reducer = (state: State = initialState, action: Action): State => {
     }
     case "tasks/fetchTasksSuccess": {
       const { tasks, status } = action.payload;
-      return { ...state, status, tasks: tasks };
+      return { ...state, status, tasks: tasks, error: null };
     }
     case "tasks/addTaskSuccess": {
       const { task, status } = action.payload;
-      return { ...state, status, tasks: [...state.tasks, task] };
+      return { ...state, status, tasks: [...state.tasks, task], error: null };
     }
     case "tasks/deleteTaskSuccess": {
       const { id, status } = action.payload;
       const updatedTasks = state.tasks.filter((task) => task.id !== id);
-      return { ...state, status, tasks: updatedTasks };
+      return { ...state, status, tasks: updatedTasks, error: null };
     }
     case "tasks/toggleTaskSuccess": {
       const { task: toggledTask, status } = action.payload;
@@ -42,7 +42,7 @@ export const reducer = (state: State = initialState, action: Action): State => {
         }
         return toggledTask;
       });
-      return { ...state, status, tasks: updatedTasks };
+      return { ...state, status, tasks: updatedTasks, error: null };
     }
     case "tasks/editTaskSuccess":
       const { task: editedTask, status } = action.payload;
@@ -54,7 +54,7 @@ export const reducer = (state: State = initialState, action: Action): State => {
         return editedTask;
       });
 
-      return { ...state, status, tasks: updatedTasks };
+      return { ...state, status, tasks: updatedTasks, error: null };
     default:
       return state;
   }
