@@ -11,11 +11,13 @@ const initialState: State = {
 export const reducer = (state: State = initialState, action: Action): State => {
   switch (action.type) {
     case "tasks/addTaskRequest":
+    case "tasks/deleteTaskRequest":
     case "tasks/fetchTasksRequest": {
       const { status } = action.payload;
       return { ...state, status };
     }
     case "tasks/addTaskError":
+    case "tasks/deleteTaskError":
     case "tasks/fetchTasksError": {
       const { status, error } = action.payload;
       return { ...state, status, error };
@@ -28,10 +30,10 @@ export const reducer = (state: State = initialState, action: Action): State => {
       const { task, status } = action.payload;
       return { ...state, status, tasks: [...state.tasks, task] };
     }
-    case "tasks/deleteTask": {
-      const id = action.payload;
+    case "tasks/deleteTaskSuccess": {
+      const { id, status } = action.payload;
       const updatedTasks = state.tasks.filter((task) => task.id !== id);
-      return { ...state, tasks: updatedTasks };
+      return { ...state, status, tasks: updatedTasks };
     }
     case "tasks/toggleTask": {
       const { id, done } = action.payload;

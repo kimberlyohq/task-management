@@ -10,10 +10,6 @@ type TaskIdPayload = $PropertyType<TaskPayload, "id">;
 type EditTaskPayload = $Diff<TaskPayload, { done: boolean }>;
 type ToggleTaskPayload = $Diff<TaskPayload, { text: string }>;
 
-export type AddTaskAction = {
-  type: "tasks/addTask",
-  payload: { task: TaskPayload },
-};
 export type DeleteTaskAction = {
   type: "tasks/deleteTask",
   payload: TaskIdPayload,
@@ -59,12 +55,29 @@ export type AddTaskError = {
   payload: { status: "error", error: string },
 };
 
+// Delete Task
+export type DeleteTaskRequest = {
+  type: "tasks/deleteTaskRequest",
+  payload: { status: "loading" },
+};
+
+export type DeleteTaskSuccess = {
+  type: "tasks/deleteTaskSuccess",
+  payload: { id: TaskIdPayload, status: "succeeded" },
+};
+
+export type DeleteTaskError = {
+  type: "tasks/deleteTaskError",
+  payload: { status: "error", error: string },
+};
+
 export type Action =
-  | AddTaskAction
   | AddTaskRequest
   | AddTaskSuccess
   | AddTaskError
-  | DeleteTaskAction
+  | DeleteTaskRequest
+  | DeleteTaskSuccess
+  | DeleteTaskError
   | EditTaskAction
   | ToggleTaskAction
   | FetchTasksRequest
