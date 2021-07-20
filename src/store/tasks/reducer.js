@@ -10,21 +10,23 @@ const initialState: State = {
 
 export const reducer = (state: State = initialState, action: Action): State => {
   switch (action.type) {
+    case "tasks/addTaskRequest":
     case "tasks/fetchTasksRequest": {
       const { status } = action.payload;
       return { ...state, status };
+    }
+    case "tasks/addTaskError":
+    case "tasks/fetchTasksError": {
+      const { status, error } = action.payload;
+      return { ...state, status, error };
     }
     case "tasks/fetchTasksSuccess": {
       const { tasks, status } = action.payload;
       return { ...state, status, tasks: tasks };
     }
-    case "tasks/fetchTasksError": {
-      const { status, error } = action.payload;
-      return { ...state, status, error };
-    }
-    case "tasks/addTask": {
-      const { task } = action.payload;
-      return { ...state, tasks: [...state.tasks, task] };
+    case "tasks/addTaskSuccess": {
+      const { task, status } = action.payload;
+      return { ...state, status, tasks: [...state.tasks, task] };
     }
     case "tasks/deleteTask": {
       const id = action.payload;

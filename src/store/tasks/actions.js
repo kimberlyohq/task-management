@@ -1,11 +1,9 @@
 // @flow
 
 import type {
-  AddTaskAction,
   DeleteTaskAction,
   EditTaskAction,
   ToggleTaskAction,
-  TaskPayload,
   ThunkAction,
 } from "./types";
 
@@ -14,10 +12,6 @@ import axios from "axios";
 const TASKS_URL = "http://localhost:8000/tasks";
 
 // Action Creators
-
-const addTask = (task: TaskPayload): AddTaskAction => {
-  return { type: "tasks/addTask", payload: { task } };
-};
 
 const deleteTask = (id: number): DeleteTaskAction => {
   return { type: "tasks/deleteTask", payload: id };
@@ -56,11 +50,25 @@ export const fetchTasks = (): ThunkAction => {
   };
 };
 
-export const addTaskAsync = (text: string): ThunkAction => {
-  return (dispatch, getState) => {
-    axios.post(`${TASKS_URL}/addTask`, { text }).then((response) => {
-      dispatch(addTask(response.data));
+export const addTask = (text: string): ThunkAction => {
+  return async (dispatch, getState) => {
+    dispatch({
+      type: "tasks/addTaskRequest",
+      payload: { status: "loading" },
     });
+    try {
+      const response = await axios.post(`${TASKS_URL}/addTask`, { text });
+      console.log(response);
+      dispatch({
+        type: "tasks/addTaskSuccess",
+        payload: { task: response.data, status: "succeeded" },
+      });
+    } catch (err) {
+      dispatch({
+        type: "tasks/addTaskError",
+        payload: { status: "error", error: "Error adding task" },
+      });
+    }
   };
 };
 

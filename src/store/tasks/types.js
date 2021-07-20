@@ -44,8 +44,26 @@ export type FetchTasksError = {
 };
 
 // Add Task
+export type AddTaskRequest = {
+  type: "tasks/addTaskRequest",
+  payload: { status: "loading" },
+};
+
+export type AddTaskSuccess = {
+  type: "tasks/addTaskSuccess",
+  payload: { task: TaskPayload, status: "succeeded" },
+};
+
+export type AddTaskError = {
+  type: "tasks/addTaskError",
+  payload: { status: "error", error: string },
+};
+
 export type Action =
   | AddTaskAction
+  | AddTaskRequest
+  | AddTaskSuccess
+  | AddTaskError
   | DeleteTaskAction
   | EditTaskAction
   | ToggleTaskAction
