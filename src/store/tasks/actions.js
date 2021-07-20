@@ -37,6 +37,8 @@ const toggleTask = (id: number, done: boolean): ToggleTaskAction => {
   return { type: "tasks/toggleTask", payload: { id, done } };
 };
 
+// Thunk Actions
+
 export const fetchTasks = (): ThunkAction => {
   return (dispatch, getState) => {
     axios
@@ -47,8 +49,6 @@ export const fetchTasks = (): ThunkAction => {
       .catch((error) => console.log(error.response.data.message));
   };
 };
-
-// Thunk Actions
 
 export const addTaskAsync = (text: string): ThunkAction => {
   return (dispatch, getState) => {

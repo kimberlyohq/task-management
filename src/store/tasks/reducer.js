@@ -4,6 +4,8 @@ import type { State, Action } from "./types";
 
 const initialState: State = {
   tasks: [],
+  status: "idle",
+  error: null,
 };
 
 export const reducer = (state: State = initialState, action: Action): State => {

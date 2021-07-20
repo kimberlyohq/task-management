@@ -37,10 +37,11 @@ export type Action =
   | EditTaskAction
   | GetTasksAction
   | ToggleTaskAction;
-
 export type State = {
   // make redux state immutable
   +tasks: Array<TaskPayload>,
+  +status: "idle" | "loading" | "succeeded" | "error",
+  +error: string | null,
 };
 
 export type GetState = () => State;
