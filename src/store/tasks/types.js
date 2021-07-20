@@ -7,19 +7,18 @@ export type TaskPayload = {
 };
 
 type TaskIdPayload = $PropertyType<TaskPayload, "id">;
-type ToggleTaskPayload = $Diff<TaskPayload, { text: string }>;
 
-export type ToggleTaskAction = {
-  type: "tasks/toggleTask",
-  payload: ToggleTaskPayload,
-};
-
-// Fetch Tasks
-export type FetchTasksRequest = {
-  type: "tasks/fetchTasksRequest",
+export type LoadRequestAction = {
+  type: "tasks/loadRequest",
   payload: { status: "loading" },
 };
 
+export type LoadRequestErrorAction = {
+  type: "tasks/loadRequestError",
+  payload: { status: "error", error: string },
+};
+
+// Fetch Tasks
 export type FetchTasksSuccess = {
   type: "tasks/fetchTasksSuccess",
   payload: { tasks: TaskPayload[], status: "succeeded" },
@@ -31,11 +30,6 @@ export type FetchTasksError = {
 };
 
 // Add Task
-export type AddTaskRequest = {
-  type: "tasks/addTaskRequest",
-  payload: { status: "loading" },
-};
-
 export type AddTaskSuccess = {
   type: "tasks/addTaskSuccess",
   payload: { task: TaskPayload, status: "succeeded" },
@@ -47,11 +41,6 @@ export type AddTaskError = {
 };
 
 // Delete Task
-export type DeleteTaskRequest = {
-  type: "tasks/deleteTaskRequest",
-  payload: { status: "loading" },
-};
-
 export type DeleteTaskSuccess = {
   type: "tasks/deleteTaskSuccess",
   payload: { id: TaskIdPayload, status: "succeeded" },
@@ -63,11 +52,6 @@ export type DeleteTaskError = {
 };
 
 // Edit Task
-
-export type EditTaskRequest = {
-  type: "tasks/editTaskRequest",
-  payload: { status: "loading" },
-};
 export type EditTaskSuccess = {
   type: "tasks/editTaskSuccess",
   payload: { task: TaskPayload, status: "succeeded" },
@@ -78,10 +62,6 @@ export type EditTaskError = {
 };
 
 // Toggle Task
-export type ToggleTaskRequest = {
-  type: "tasks/toggleTaskRequest",
-  payload: { status: "loading" },
-};
 export type ToggleTaskSuccess = {
   type: "tasks/toggleTaskSuccess",
   payload: { task: TaskPayload, status: "succeeded" },
@@ -91,21 +71,14 @@ export type ToggleTaskError = {
   payload: { status: "error", error: string },
 };
 export type Action =
-  | AddTaskRequest
+  | LoadRequestAction
+  | LoadRequestErrorAction
   | AddTaskSuccess
-  | AddTaskError
-  | DeleteTaskRequest
   | DeleteTaskSuccess
-  | DeleteTaskError
-  | EditTaskRequest
   | EditTaskSuccess
-  | EditTaskError
-  | ToggleTaskRequest
   | ToggleTaskSuccess
-  | ToggleTaskError
-  | FetchTasksRequest
-  | FetchTasksSuccess
-  | FetchTasksError;
+  | FetchTasksSuccess;
+
 export type State = {
   // make redux state immutable
   +tasks: Array<TaskPayload>,

@@ -1,19 +1,30 @@
 // @flow
 
-import type { ThunkAction } from "./types";
+import type {
+  LoadRequestAction,
+  LoadRequestErrorAction,
+  ThunkAction,
+} from "./types";
 
 import axios from "axios";
 
 const TASKS_URL = "http://localhost:8000/tasks";
 
+const loadRequest = (): LoadRequestAction => ({
+  type: "tasks/loadRequest",
+  payload: { status: "loading" },
+});
+
+const loadRequestError = (error: string): LoadRequestErrorAction => ({
+  type: "tasks/loadRequestError",
+  payload: { status: "error", error },
+});
+
 // Thunk Actions
 
 export const fetchTasks = (): ThunkAction => {
   return async (dispatch, getState) => {
-    dispatch({
-      type: "tasks/fetchTasksRequest",
-      payload: { status: "loading" },
-    });
+    dispatch(loadRequest());
     try {
       const response = await axios.get(TASKS_URL);
 
@@ -22,20 +33,14 @@ export const fetchTasks = (): ThunkAction => {
         payload: { tasks: response.data, status: "succeeded" },
       });
     } catch (err) {
-      dispatch({
-        type: "tasks/fetchTasksError",
-        payload: { status: "error", error: "Error fetching data" },
-      });
+      dispatch(loadRequestError("Error fetching tasks"));
     }
   };
 };
 
 export const addTask = (text: string): ThunkAction => {
   return async (dispatch, getState) => {
-    dispatch({
-      type: "tasks/addTaskRequest",
-      payload: { status: "loading" },
-    });
+    dispatch(loadRequest());
     try {
       const response = await axios.post(`${TASKS_URL}/addTask`, { text });
 
@@ -44,20 +49,14 @@ export const addTask = (text: string): ThunkAction => {
         payload: { task: response.data, status: "succeeded" },
       });
     } catch (err) {
-      dispatch({
-        type: "tasks/addTaskError",
-        payload: { status: "error", error: "Error adding task" },
-      });
+      dispatch(loadRequestError("Error adding task"));
     }
   };
 };
 
 export const deleteTask = (id: number): ThunkAction => {
   return async (dispatch, getState) => {
-    dispatch({
-      type: "tasks/deleteTaskRequest",
-      payload: { status: "loading" },
-    });
+    dispatch(loadRequest());
     try {
       await axios.post(`${TASKS_URL}/deleteTask/${id}`);
 
@@ -66,20 +65,14 @@ export const deleteTask = (id: number): ThunkAction => {
         payload: { id, status: "succeeded" },
       });
     } catch (err) {
-      dispatch({
-        type: "tasks/deleteTaskError",
-        payload: { status: "error", error: "Error deleting task" },
-      });
+      dispatch(loadRequestError("Error deleting task"));
     }
   };
 };
 
 export const editTask = (id: number, text: string): ThunkAction => {
   return async (dispatch, getState) => {
-    dispatch({
-      type: "tasks/editTaskRequest",
-      payload: { status: "loading" },
-    });
+    dispatch(loadRequest());
     try {
       const response = await axios.post(`${TASKS_URL}/editTask/${id}`, {
         text,
@@ -90,20 +83,14 @@ export const editTask = (id: number, text: string): ThunkAction => {
         payload: { task: response.data, status: "succeeded" },
       });
     } catch (err) {
-      dispatch({
-        type: "tasks/editTaskError",
-        payload: { status: "error", error: "Error editing task" },
-      });
+      dispatch(loadRequestError("Error editing task"));
     }
   };
 };
 
 export const toggleTask = (id: number): ThunkAction => {
   return async (dispatch, getState) => {
-    dispatch({
-      type: "tasks/toggleTaskRequest",
-      payload: { status: "loading" },
-    });
+    dispatch(loadRequest());
     try {
       const response = await axios.post(`${TASKS_URL}/toggleTask/${id}`);
 
@@ -112,10 +99,7 @@ export const toggleTask = (id: number): ThunkAction => {
         payload: { task: response.data, status: "succeeded" },
       });
     } catch (err) {
-      dispatch({
-        type: "tasks/toggleTaskError",
-        payload: { status: "error", error: "Error toggling task" },
-      });
+      dispatch(loadRequestError("Error toggling task"));
     }
   };
 };
