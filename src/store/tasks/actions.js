@@ -1,17 +1,10 @@
 // @flow
 
-import type {  ToggleTaskAction, ThunkAction } from "./types";
+import type { ThunkAction } from "./types";
 
 import axios from "axios";
 
 const TASKS_URL = "http://localhost:8000/tasks";
-
-// Action Creators
-
-
-const toggleTask = (id: number, done: boolean): ToggleTaskAction => {
-  return { type: "tasks/toggleTask", payload: { id, done } };
-};
 
 // Thunk Actions
 
@@ -92,8 +85,6 @@ export const editTask = (id: number, text: string): ThunkAction => {
         text,
       });
 
-      console.log(response.data);
-
       dispatch({
         type: "tasks/editTaskSuccess",
         payload: { task: response.data, status: "succeeded" },
@@ -107,14 +98,24 @@ export const editTask = (id: number, text: string): ThunkAction => {
   };
 };
 
-export const toggleTaskAsync = (id: number): ThunkAction => {
-  return (dispatch, getState) => {
-    axios
-      .post(`${TASKS_URL}/toggleTask/${id}`, { id })
-      .then((response) => {
-        const { done } = response.data;
-        dispatch(toggleTask(id, done));
-      })
-      .catch((error) => console.log(error.response.data.message));
+export const toggleTask = (id: number): ThunkAction => {
+  return async (dispatch, getState) => {
+    dispatch({
+      type: "tasks/toggleTaskRequest",
+      payload: { status: "loading" },
+    });
+    try {
+      const response = await axios.post(`${TASKS_URL}/toggleTask/${id}`);
+
+      dispatch({
+        type: "tasks/toggleTaskSuccess",
+        payload: { task: response.data, status: "succeeded" },
+      });
+    } catch (err) {
+      dispatch({
+        type: "tasks/toggleTaskError",
+        payload: { status: "error", error: "Error toggling task" },
+      });
+    }
   };
 };

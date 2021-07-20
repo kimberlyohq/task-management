@@ -77,6 +77,19 @@ export type EditTaskError = {
   payload: { status: "error", error: string },
 };
 
+// Toggle Task
+export type ToggleTaskRequest = {
+  type: "tasks/toggleTaskRequest",
+  payload: { status: "loading" },
+};
+export type ToggleTaskSuccess = {
+  type: "tasks/toggleTaskSuccess",
+  payload: { task: TaskPayload, status: "succeeded" },
+};
+export type ToggleTaskError = {
+  type: "tasks/toggleTaskError",
+  payload: { status: "error", error: string },
+};
 export type Action =
   | AddTaskRequest
   | AddTaskSuccess
@@ -87,7 +100,9 @@ export type Action =
   | EditTaskRequest
   | EditTaskSuccess
   | EditTaskError
-  | ToggleTaskAction
+  | ToggleTaskRequest
+  | ToggleTaskSuccess
+  | ToggleTaskError
   | FetchTasksRequest
   | FetchTasksSuccess
   | FetchTasksError;

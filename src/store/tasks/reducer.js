@@ -13,6 +13,7 @@ export const reducer = (state: State = initialState, action: Action): State => {
     case "tasks/addTaskRequest":
     case "tasks/deleteTaskRequest":
     case "tasks/editTaskRequest":
+    case "tasks/toggleTaskRequest":
     case "tasks/fetchTasksRequest": {
       const { status } = action.payload;
       return { ...state, status };
@@ -20,6 +21,7 @@ export const reducer = (state: State = initialState, action: Action): State => {
     case "tasks/addTaskError":
     case "tasks/deleteTaskError":
     case "tasks/editTaskError":
+    case "tasks/toggleTaskError":
     case "tasks/fetchTasksError": {
       const { status, error } = action.payload;
       return { ...state, status, error };
@@ -37,13 +39,12 @@ export const reducer = (state: State = initialState, action: Action): State => {
       const updatedTasks = state.tasks.filter((task) => task.id !== id);
       return { ...state, status, tasks: updatedTasks };
     }
-    case "tasks/toggleTask": {
-      const { id, done } = action.payload;
+    case "tasks/toggleTaskSuccess": {
+      const { task: toggledTask } = action.payload;
       const updatedTasks = state.tasks.map((task) => {
-        if (task.id !== id) {
+        if (task.id !== toggledTask.id) {
           return task;
         }
-        const toggledTask = { ...task, done };
         return toggledTask;
       });
       return { ...state, tasks: updatedTasks };
